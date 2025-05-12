@@ -1,0 +1,7 @@
+---
+webservers:
+  hosts: web01
+  vars:
+    ansible_hosts: 
+    ansible_user: 
+    ansible_password: 

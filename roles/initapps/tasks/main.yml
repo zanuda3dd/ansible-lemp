@@ -1,0 +1,34 @@
+---
+# tasks file for roles/initapps
+- name: Install common utils
+  ansible.builtin.apt:
+    name:
+      - unzip
+      - php8.1-mysql
+    state: present
+
+- name: Create Joomla directory
+  ansible.builtin.file:
+    path: "{{ joomla_directory }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Delete default nginx site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Copy template
+  ansible.builtin.template:
+    src: joomla.conf.j2
+    dest: /etc/nginx/sites-available/joomla.conf
+    mode: '0644'
+
+- name: Link site
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/joomla.conf
+    dest: /etc/nginx/sites-enabled/joomla.conf
+    state: link
+  notify: Restart nginx

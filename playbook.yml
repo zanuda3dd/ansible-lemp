@@ -1,0 +1,13 @@
+---
+- name: Install LEMP and Joomla CMS
+  hosts: all
+  become: true
+  vars_files:
+    - common_vars.yml
+
+  roles:
+    - role: geerlingguy.mysql
+    - role: geerlingguy.php
+    - role: geerlingguy.nginx
+    - role: initapps
+    - role: joomla

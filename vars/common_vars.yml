@@ -1,0 +1,14 @@
+mysql_root_password: "{{ mysql_root_password }}"
+mysql_users:
+  - name: admin
+    host: "%"
+    password: "{{ mysql_user_password }}"
+    priv: "*.*:ALL"
+joomla_version: "5.1.4"
+joomla_directory: "/var/www/sites/joomla"
+nginx_server_name: "joomla_domain.com"
+nginx_user: "www-data"
+php_version: "8.1"
+php_webserver_daemon: "nginx"
+php_versions_install_recommends: false
+php_enablerepo: "nginx"

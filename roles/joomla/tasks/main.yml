@@ -1,0 +1,23 @@
+---
+# tasks file for joomla
+- name: Download Joomla zip file
+  ansible.builtin.get_url:
+    url: "https://update.joomla.org/releases/{{ joomla_version }}/Joomla_{{ joomla_version }}-Stable-Full_Package.zip"
+    dest: /tmp/joomla.zip
+    validate_certs: false
+    mode: '0644'
+
+- name: Extract Joomla zip file
+  ansible.builtin.unarchive:
+    src: /tmp/joomla.zip
+    dest: "{{ joomla_directory }}"
+    remote_src: true
+
+- name: Set ownership for Joomla
+  ansible.builtin.file:
+    path: "{{ joomla_directory }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+    recurse: true
